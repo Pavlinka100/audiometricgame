@@ -15,6 +15,7 @@ function startGame(event) {
     console.log(fullDelay);
     playGame(n); 
     console.log("play game started");   
+    rules.classList.add("d-none");
 }
 
 function stopGame(event){
@@ -26,6 +27,7 @@ function stopGame(event){
     speedOptions.classList.remove("d-none");
     console.log("tady ma by stopped");
     startStopButton.textContent = "Restart"; 
+    rules.classList.remove("d-none");
 }
 
 
