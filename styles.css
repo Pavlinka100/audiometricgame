@@ -8,15 +8,28 @@
 }
 
 .card {
-  width: 30rem;
-  min-height: 32rem;
-}
-
-
-@media only screen and (max-height: 600px) {
-  footer{
-    display:none;
-  }
+  width: 25rem;
+  min-height: 25rem;
   
 }
 
+.amgamegif {
+  height: 70vh;
+  max-width: 500px;
+  max-height: 500px;
+
+} 
+
+
+
+@media only screen and (max-height: 500px) {
+  footer{
+    display:none;
+  }
+
+ 
+
+nav{
+  display: none;
+}
+}
