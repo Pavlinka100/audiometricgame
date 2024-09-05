@@ -2,7 +2,10 @@
   footer{
     display:none;
   }
-
+.amgamegif {
+  height: 80vh;
+  width: 80vh;
+}
 
   .heading{
     display: none;
