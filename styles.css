@@ -1,9 +1,3 @@
-.container{
-  
-}
-
-
-
 .amgspeedoptions{
   min-height: 50px;
   min-width: 155px;
@@ -21,15 +15,30 @@ footer{
 
 }
 
+.amggif {
+  height: 85vw;
+  width: 85vw;
+  max-width: 600px;
+  max-height: 600px;
+  min-width: 250x;
 
+  min-height: 250px;
 
+} 
+
+img {
+
+  width: 100%;
+  height: auto;
+  
+}
 
 @media  screen and (max-width: 767px) {
   footer{
     position: relative;
   }
 
-
+  
 }
 
 
@@ -37,7 +46,12 @@ footer{
   footer{
     display:none;
   }
-  
+ 
+  .amggif {
+    height: 90vh;
+    width: 90vh;
+  }
+
   .heading{
     display: none;
   }
@@ -45,14 +59,4 @@ footer{
 
 
 
-.amggif {
-  height: 50vh;
-  width: 70vw;
-  max-width: 500px;
-  max-height: 500px;
-  min-width: 250x;
-
-  min-height: 250px;
-
-} 
 
