@@ -1,11 +1,8 @@
-
-
 .container{
-  height: 93vh;
+  min-height: 75vh;
 }
 
-
-.amgamegif {
+.amggif {
   height: 75vw;
   width: 100vw;
   max-width: 500px;
@@ -16,9 +13,30 @@
 
 } 
 
-.amgamespeedoptions{
-  min-height: 50px;
+.amgspeedoptions{
+  min-height: 150px;
   min-width: 155px;
+}
+
+
+footer{
+    margin-top: 1em;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    float:none;
+    text-align: center;
+
+}
+
+
+
+
+@media  screen and (max-width: 767px) {
+  footer{
+    position: relative;
+  }
 }
 
 
