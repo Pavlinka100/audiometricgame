@@ -10,7 +10,7 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
 
-var AudioNames =["100.mp3", "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
+var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
 var listening = false;
 var soundCatched = false;
@@ -21,6 +21,7 @@ var gifTimeout = "";
 var listeningTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
+var audio = new  Audio("sounds/" + AudioNames[0]);
 
 
 
@@ -30,6 +31,8 @@ function startStopGame(){
         speed = $(".amgspeed").val();
 
         $(".amgstartstop").text("Stop");
+        $(".amgstartstop").removeClass("btn-primary");
+        $(".amgstartstop").addClass("btn-outline-secondary")
         $(".amgspeedoptions").addClass("d-none");
         $(".amghelp").addClass("d-none");
 
@@ -46,25 +49,27 @@ function startStopGame(){
         
         startGameTimeout =  setTimeout(function(){
             playGame(); 
-            console.log("game started");
         },3000);
  
 
     } else {
+        
         gameIsOn=false; 
         listening = false;
-        console.log(listeningTimeout + " clearing listening timeout");
-        console.log(playGameTimeout + " clearing listening timeout");
+        audio.pause();
+
         clearTimeout(listeningTimeout);
         clearTimeout(playGameTimeout);
         clearTimeout(gifTimeout);
         clearTimeout(startGameTimeout);
 
         $(".amgstartstop").text("Start");
+        $(".amgstartstop").addClass("btn-primary");
+        $(".amgstartstop").removeClass("btn-outline-secondary")
         $(".amgspeedoptions").removeClass("d-none");
         $(".amghelp").removeClass("d-none");
         $(".amggif").attr("src", "images/button-162066_640.png");
-        
+        audio.pause();
     }
     
 }
@@ -75,6 +80,7 @@ function checkCatchedSound(){
     if (gameIsOn && listening && (!soundCatched)){ 
         soundCatched = true;
         counter++;
+
         //pick and show next gif
         gif = "gifs/" + gifsNames[(n+counter) % gifsNames.length];
         $(".amggif").attr("src", gif);
@@ -90,6 +96,7 @@ function playGame(){
 
     soundCatched = false;
     playRandomSound();
+
     listening = true;
     
     listeningTimeout = setTimeout(function(){
@@ -100,10 +107,10 @@ function playGame(){
     let randomWaiting = Math.floor(Math.random()*3000);
 
     if (soundCatched) {
-howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + randomWaiting;
+    howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + randomWaiting;
     }
     else {
-howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
+    howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
     }
 
     playGameTimeout = setTimeout(function(){
@@ -116,8 +123,10 @@ howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
 
 function playRandomSound(){
     let i = Math.floor(Math.random() * AudioNames.length);
-    var audio = new Audio("sounds/" + AudioNames[i]);
+    audio = new Audio("sounds/" + AudioNames[i]);
     audio.play();
+    //setTimeout(function(){audio.pause();},2700); //the audio is 3 sec long, can be adjusted, later maybe included in speed options
+    
 
 }
 
