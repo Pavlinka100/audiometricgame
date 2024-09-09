@@ -121,7 +121,7 @@ function playRandomSound(){
 $(".amgstartstop").on("click", startStopGame);
 
 //to evaluate if the click catched the sound
-$(document).on("click", checkCatchedSound);
+$(document).on("click keypress", checkCatchedSound);
 
 $(".amghelp").on("click", function(){ 
     window.alert("Nastav si rychlost a spusť hru.  Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč.");
