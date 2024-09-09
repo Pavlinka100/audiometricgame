@@ -1,111 +1,117 @@
+//as there is no backend, leaving as the name arrays here to be able to host it on github without backend required
+var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-13309_512.gif","cartoon-11499_512.gif", "cartoon-562_256.gif",
+    "cartoon-564_256.gif", "cartoon-571_256.gif","cartoon-574_256.gif", "cartoon-762_256.gif",
+    "cat-13169_512.gif", "cat-133_512.gif","cat-13754_512.gif", "cat-14030_512.gif",
+    "cat-6295_512.gif", "character-13952_256.gif","cow-59_256.gif", "dog-12565_512.gif",
+    "dog-1879.gif","dog-3343_256.gif","dog-471_256.gif", 
+    "emoji-1552.gif", "flower-11997_256.gif","flying-7288_256.gif", "hedgehog-1725_512.gif",
+    "horse-11591_512.gif", "kiss-3365_512.gif","ladybug-5068_256.gif", "names.txt",
+    "penguin-10607_256.gif", "pinwheel-8829_256.gif","rabbit-14586_512.gif", "rabbit-6933.gif",
+    "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
+    "whale-155_512.gif"];
 
-function startGame(event) {
-    //let disappear options as the game is started
-    speedOptions.classList.add("d-none");
-    startStopButton.classList.remove("d-none");
-    rules.classList.add("d-none");
+var AudioNames =["100.mp3", "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
-    stopped = false;
-    startStopButton.textContent = "Stop"; 
+var listening = false;
+var soundCatched = false;
+var gameIsOn = false;
+var counter = 0; //to count rounds to show next gif each round
+var n = Math.floor(Math.random() * gifsNames.length); //to start showing the gifs from different gif every time
+var howLongToShowGif = 10000;
+var howLongToListen = 6000;
+var howLongTillNextRoundDefault = 20000;
 
-    speedLevel = document.querySelector(".amgamespeed").value;
-    fullDelay = Math.floor(delay/speedLevel);
 
-    playGame(n); 
-   
+function startStopGame(){
+    if (!gameIsOn) {
+        gameIsOn = true; 
+        speed = $(".amgspeed").val();
+
+        $(".amgstartstop").text("Stop");
+        $(".amgspeedoptions").addClass("d-none");
+        $(".amghelp").addClass("d-none");
+
+        if (speed == 2) {
+        howLongToShowGif = 5000;
+        howLongToListen = 3000;
+        howLongTillNextRoundDefault = 10000;
+        }
+        
+        
+        setTimeout(function(){
+            playGame(); 
+            console.log("game started");
+        },3000);
+ 
+
+    } else {
+        gameIsOn=false; 
+        $(".amgstartstop").text("Start");
+        $(".amgspeedoptions").removeClass("d-none");
+        $(".amghelp").removeClass("d-none");
+        $(".amggif").attr("src", "images/button-162066_640.png");
+        
+    }
+    
 }
 
-function stopGame(event){
-    location.reload();
+
+function checkCatchedSound(){
+  
+    if (gameIsOn && listening && (!soundCatched)){ 
+        soundCatched = true;
+        counter++;
+        //pick and show next gif
+        gif = "gifs/" + gifsNames[(n+counter) % gifsNames.length];
+        $(".amggif").attr("src", gif);
+
+        //switch to the button image after some time
+        setTimeout(function(){
+            $(".amggif").attr("src", "images/button-162066_640.png");
+        },howLongToShowGif);
+    }
 }
 
+function playGame(){
+
+    soundCatched = false;
+    playRandomSound();
+    listening = true;
+    
+    setTimeout(function(){
+        listening = false;
+    }, howLongToListen);
+
+    let randomWaiting = Math.floor(Math.random()*3000);
+
+    if (soundCatched) {
+howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + randomWaiting;
+    }
+    else {
+howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
+    }
+
+    setTimeout(function(){
+        if (gameIsOn){
+        playGame();
+    };
+    }, howLongTillNextRound);
+}
 
 function playRandomSound(){
-    let n = Math.random();
-    n = n*AudioNamesArray.length;
-    n = Math.floor(n);
-    var audio = new Audio("sounds/" + AudioNamesArray[n]);
+    let i = Math.floor(Math.random() * AudioNames.length);
+    var audio = new Audio("sounds/" + AudioNames[i]);
     audio.play();
 
 }
 
-function catchPressedKey(event) {
+//LISTENERS
+//to start the game
+$(".amgstartstop").on("click", startStopGame);
 
-    gameControlGif.src = "gifs/" + gifsNamesInitialArray[(n+round) % gifsNamesInitialArray.length];
-    round++;
-    document.removeEventListener("keydown", catchPressedKey);
-    gameControlGif.removeEventListener("click", catchPressedKey); 
-    setTimeout(function(){
-        
+//to evaluate if the click catched the sound
+$(document).on("click", checkCatchedSound);
 
-    },fullDelay);
-       
-}
-
-
-//playgame function controls that once the sound is played the keypresses or click check is activated and if the key is pressed within time, gif appears
-function playGame(){
-    
-    gameControlGif.src = buttonImage;
-    randomMiliSeconds = Math.random()*1000 + fullDelay;
-
-
-    setTimeout(function(event) {          
-        document.addEventListener("keydown", catchPressedKey);
-        gameControlGif.addEventListener("click", catchPressedKey);
-        if (stopped==false){playRandomSound();};
-       //after x sec 
-        setTimeout(function(){
-            document.removeEventListener("keydown", catchPressedKey);
-            gameControlGif.removeEventListener("click", catchPressedKey); 
-            
-            if (stopped==false){playGame(); };
-
-        },randomMiliSeconds);
-        
-       
-        }, 5000); 
-    
-    
-}
-
-
-//Initial setup of the game
-
-//setup of the sounds and images
-//should be replaced by getting the folder from server side, based on github hosting, leaving as it is
-var gifsNamesInitialArray = [ "bell-pepper-8079_256.gif", "cartoon-571_256.gif", "character-13952_256.gif", "dog-3343_256.gif",
-    "flower-11997_256.gif", "flying-7288_256.gif", "ladybug-5068_256.gif", "pinwheel-8829_256.gif",
-    "star-19_256.gif", "valentine-3652_256.gif","wall-8423_256.gif" ]
-
-var AudioNamesArray =["100.mp3", "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
-var speedLevel = 1;
-var delay = 20000; //number of ms to delay SetTimout
-var fullDelay = delay;
-
-var gameControlGif = document.querySelector(".amgamegif");
-var startStopButton = document.querySelector(".amstartstopbutton");
-var speedOptions = document.querySelector(".amgamespeedoptions");
-
-
-var stopped = true;
-var buttonImage ="images/button-162066_640.png";
-var rules = document.querySelector(".pravidla");
-
-
-//getting random number to start with the gifs in the array as start is randomly picked up and affer it one by one is shown
-var n = Math.floor(Math.random() * gifsNamesInitialArray.length);
-var round = 0;
-
-
-//start/stop control 
-startStopButton.addEventListener("click", function(event){ 
-                                        if (stopped==true){startGame(event);} 
-                                        else {stopGame(event);}
-                                    });
-
-                                    //start/stop control 
-rules.addEventListener("click", function(){ 
+$(".amghelp").on("click", function(){ 
     window.alert("Nastav si rychlost a spusť hru.  Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč.");
 });
-
