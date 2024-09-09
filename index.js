@@ -17,6 +17,10 @@ var soundCatched = false;
 var gameIsOn = false;
 var counter = 0; //to count rounds to show next gif each round
 var n = Math.floor(Math.random() * gifsNames.length); //to start showing the gifs from different gif every time
+var gifTimeout = "";
+var listeningTimeout = "";
+var startGameTimeout = "";
+var playGameTimeout = "";
 
 
 
@@ -48,6 +52,7 @@ function startStopGame(){
 
     } else {
         gameIsOn=false; 
+        listening = false;
         console.log(listeningTimeout + " clearing listening timeout");
         console.log(playGameTimeout + " clearing listening timeout");
         clearTimeout(listeningTimeout);
