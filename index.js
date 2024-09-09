@@ -17,9 +17,7 @@ var soundCatched = false;
 var gameIsOn = false;
 var counter = 0; //to count rounds to show next gif each round
 var n = Math.floor(Math.random() * gifsNames.length); //to start showing the gifs from different gif every time
-var howLongToShowGif = 10000;
-var howLongToListen = 6000;
-var howLongTillNextRoundDefault = 20000;
+
 
 
 function startStopGame(){
@@ -32,9 +30,13 @@ function startStopGame(){
         $(".amghelp").addClass("d-none");
 
         if (speed == 2) {
-        howLongToShowGif = 5000;
-        howLongToListen = 3000;
-        howLongTillNextRoundDefault = 10000;
+             howLongToShowGif = 5000;
+             howLongToListen = 3000;
+             howLongTillNextRoundDefault = 10000;
+        } else {
+            howLongToShowGif = 10000;
+            howLongToListen = 6000;
+            howLongTillNextRoundDefault = 20000;
         }
         
         
