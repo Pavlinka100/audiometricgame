@@ -5,7 +5,7 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
     "cat-6295_512.gif", "character-13952_256.gif","cow-59_256.gif", "dog-12565_512.gif",
     "dog-1879.gif","dog-3343_256.gif","dog-471_256.gif", 
     "emoji-1552.gif", "flower-11997_256.gif","flying-7288_256.gif", "hedgehog-1725_512.gif",
-    "horse-11591_512.gif", "kiss-3365_512.gif","ladybug-5068_256.gif", "names.txt",
+    "horse-11591_512.gif", "kiss-3365_512.gif","ladybug-5068_256.gif", 
     "penguin-10607_256.gif", "pinwheel-8829_256.gif","rabbit-14586_512.gif", "rabbit-6933.gif",
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
@@ -38,7 +38,7 @@ function startStopGame(){
         }
         
         
-        setTimeout(function(){
+        startGameTimeout =  setTimeout(function(){
             playGame(); 
             console.log("game started");
         },3000);
@@ -46,6 +46,13 @@ function startStopGame(){
 
     } else {
         gameIsOn=false; 
+        console.log(listeningTimeout + " clearing listening timeout");
+        console.log(playGameTimeout + " clearing listening timeout");
+        clearTimeout(listeningTimeout);
+        clearTimeout(playGameTimeout);
+        clearTimeout(gifTimeout);
+        clearTimeout(startGameTimeout);
+
         $(".amgstartstop").text("Start");
         $(".amgspeedoptions").removeClass("d-none");
         $(".amghelp").removeClass("d-none");
@@ -66,7 +73,7 @@ function checkCatchedSound(){
         $(".amggif").attr("src", gif);
 
         //switch to the button image after some time
-        setTimeout(function(){
+        gifTimeout = setTimeout(function(){
             $(".amggif").attr("src", "images/button-162066_640.png");
         },howLongToShowGif);
     }
@@ -78,9 +85,10 @@ function playGame(){
     playRandomSound();
     listening = true;
     
-    setTimeout(function(){
+    listeningTimeout = setTimeout(function(){
         listening = false;
     }, howLongToListen);
+    console.log(listeningTimeout);
 
     let randomWaiting = Math.floor(Math.random()*3000);
 
@@ -91,11 +99,12 @@ howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + randomWa
 howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
     }
 
-    setTimeout(function(){
+    playGameTimeout = setTimeout(function(){
         if (gameIsOn){
         playGame();
     };
     }, howLongTillNextRound);
+    console.log(playGameTimeout);
 }
 
 function playRandomSound(){
