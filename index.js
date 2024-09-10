@@ -32,7 +32,8 @@ function startStopGame(){
 
         $(".amgstartstop").text("Stop");
         $(".amgstartstop").removeClass("btn-primary");
-        $(".amgstartstop").addClass("btn-outline-secondary")
+        $(".amgstartstop").addClass("btn-outline-secondary");
+        
         $(".amgspeedoptions").addClass("d-none");
         $(".amghelp").addClass("d-none");
 
@@ -65,7 +66,7 @@ function startStopGame(){
 
         $(".amgstartstop").text("Start");
         $(".amgstartstop").addClass("btn-primary");
-        $(".amgstartstop").removeClass("btn-outline-secondary")
+        $(".amgstartstop").removeClass("btn-outline-secondary");
         $(".amgspeedoptions").removeClass("d-none");
         $(".amghelp").removeClass("d-none");
         $(".amggif").attr("src", "images/button-162066_640.png");
