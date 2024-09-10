@@ -18,11 +18,13 @@ footer{
 .amggif {
   height: 85vw;
   width: 85vw;
-  max-width: 600px;
-  max-height: 600px;
-  min-width: 250x;
+  max-width: 75vw;
+  max-height: 75vw;
+  max-width: 500px;
+  max-height: 500px;
+  min-width: 200x;
 
-  min-height: 250px;
+  min-height: 200px;
 
 } 
 
@@ -50,6 +52,9 @@ img {
   .amggif {
     height: 90vh;
     width: 90vh;
+    max-width: 75vw;
+    max-height: 75vw;
+
   }
 
   .heading{
