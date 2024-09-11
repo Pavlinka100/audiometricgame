@@ -24,6 +24,14 @@ var playGameTimeout = "";
 var audio = new  Audio("sounds/" + AudioNames[0]);
 
 
+function detectBrowser() {
+    var userAgent = navigator.userAgent;
+   if ( !(userAgent.indexOf("Firefox") > -1) && !(userAgent.indexOf("Chrome") > -1 )) {
+       alert("Otevři mě prosím v Chromu nebo Firefoxu, jinak nemusím správně fungovat. Děkuji!");
+    } 
+    
+}
+
 
 function startStopGame(){
     if (!gameIsOn) {
@@ -130,6 +138,9 @@ function playRandomSound(){
     
 
 }
+//browser detection to prevent issues with messenger default browser
+detectBrowser();
+
 
 //LISTENERS
 //to start the game
