@@ -40,11 +40,11 @@ function startStopGame(){
         if (speed == 2) {
              howLongToShowGif = 5000;
              howLongToListen = 3000;
-             howLongTillNextRoundDefault = 10000;
+             howLongTillNextRoundDefault = 5000;
         } else {
             howLongToShowGif = 10000;
             howLongToListen = 6000;
-            howLongTillNextRoundDefault = 20000;
+            howLongTillNextRoundDefault = 10000;
         }
         
         
@@ -108,10 +108,10 @@ function playGame(){
     let randomWaiting = Math.floor(Math.random()*3000);
 
     if (soundCatched) {
-    howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + randomWaiting;
+    howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + howLongToListen+ randomWaiting;
     }
     else {
-    howLongTillNextRound = howLongTillNextRoundDefault + randomWaiting;
+    howLongTillNextRound = howLongTillNextRoundDefault + howLongToListen + randomWaiting;
     }
 
     playGameTimeout = setTimeout(function(){
@@ -140,5 +140,5 @@ $(".amggif").on("click", checkCatchedSound);
 $(document).on("keypress", checkCatchedSound);
 
 $(".amghelp").on("click", function(){ 
-    window.alert("Nastav si rychlost a spusť hru.  Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč.");
+    window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč. Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
 });
