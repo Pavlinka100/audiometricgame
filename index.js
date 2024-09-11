@@ -26,7 +26,7 @@ var audio = new  Audio("sounds/" + AudioNames[0]);
 
 function detectBrowser() {
     var userAgent = navigator.userAgent;
-   if ( !(userAgent.indexOf("Firefox") > -1) && !(userAgent.indexOf("Chrome") > -1 )) {
+   if ( !(userAgent.indexOf("Firefox") > -1) || !(userAgent.indexOf("Chrome") > -1 )) {
        alert("Otevři mě prosím v Chromu nebo Firefoxu, jinak nemusím správně fungovat. Děkuji!");
     } 
     
