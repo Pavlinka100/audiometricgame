@@ -29,8 +29,10 @@ function detectBrowser() {
    if ( (userAgent.indexOf("Firefox") > -1) || (userAgent.indexOf("Chrome") > -1 )) {
     console.log("browser ok");
 
-       
-        $(".amgheading").text("Otevři mě prosím v Chromu nebo Firefoxu, jinak nemusím správně fungovat. Děkuji!");
+        
+    } else {
+        $(".amgwarning").removeClass("d-none");
+        $(".amgwarning").text("Otevři mě prosím v Chromu nebo Firefoxu, jinak nemusím správně fungovat. Děkuji!");
     }
     
 }
@@ -44,7 +46,7 @@ function startStopGame(){
         $(".amgstartstop").text("Stop");
         $(".amgstartstop").removeClass("btn-primary");
         $(".amgstartstop").addClass("btn-outline-secondary");
-        
+        $(".amgwarning").addClass("d-none");
         $(".amgspeedoptions").addClass("d-none");
         $(".amghelp").addClass("d-none");
 
