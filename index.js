@@ -151,6 +151,7 @@ $(".amgstartstop").on("click", startStopGame);
 
 //to evaluate if the click catched the sound
 $(".amggif").on("click", checkCatchedSound);
+$(".amggif").on("touchstart", checkCatchedSound);
 $(document).on("keypress", checkCatchedSound);
 
 $(".amghelp").on("click", function(){ 
