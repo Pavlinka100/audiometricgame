@@ -154,6 +154,7 @@ function playGame(){
 function playRandomSound(){
     let i = Math.floor(Math.random() * AudioNames.length);
     audio = new Audio("sounds/" + AudioNames[i]);
+    $(".amgstartstop").text(AudioNames[i]);
     audio.play();
     //setTimeout(function(){audio.pause();},2700); //the audio is 3 sec long, can be adjusted, later maybe included in speed options
     
@@ -172,5 +173,5 @@ $(document ).on("keypress", checkCatchedSound);
 $(".amgstartstop").on("click", startStopGame);
 
 $(".amghelp").on("click", function(){ 
-    window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč. Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
+    window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji Firefox nebo Chrome) . Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
 });
