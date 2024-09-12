@@ -27,7 +27,7 @@ var audio = new  Audio("sounds/" + AudioNames[0]);
 function detectBrowser() {
     var userAgent = navigator.userAgent;
    if ( (userAgent.indexOf("Firefox") > -1) || (userAgent.indexOf("Chrome") > -1 )) {
-    console.log("browser ok");
+    console.log("browser ok" + userAgent.indexOf("Firefox") + " in FF and in Chrome" + userAgent.indexOf("Chrome"));
 
         
     } else {
@@ -38,7 +38,11 @@ function detectBrowser() {
 }
 
 
-function startStopGame(){
+function startStopGame(event){
+    if (event.key){console.log("neco")} else {
+    event.preventDefault();
+    console.log(event.preventDefault());
+    console.log(event);
     if (!gameIsOn) {
         gameIsOn = true; 
         speed = $(".amgspeed").val();
@@ -49,6 +53,13 @@ function startStopGame(){
         $(".amgwarning").addClass("d-none");
         $(".amgspeedoptions").addClass("d-none");
         $(".amghelp").addClass("d-none");
+
+        $(':focus').blur();
+        
+
+        console.log("elemnet blur");
+        event.preventDefault();
+        console.log(event);
 
         if (speed == 2) {
              howLongToShowGif = 5000;
@@ -83,13 +94,18 @@ function startStopGame(){
         $(".amgspeedoptions").removeClass("d-none");
         $(".amghelp").removeClass("d-none");
         $(".amggif").attr("src", "images/button-162066_640.png");
+        
         audio.pause();
+
+        $(':focus').blur();
+
     }
-    
+} 
 }
 
 
-function checkCatchedSound(){
+function checkCatchedSound(event){
+    console.log(event.key);
   
     if (gameIsOn && listening && (!soundCatched)){ 
         soundCatched = true;
@@ -146,13 +162,14 @@ function playRandomSound(){
 
 detectBrowser();
 //LISTENERS
-//to start the game
-$(".amgstartstop").on("click", startStopGame);
+
 
 //to evaluate if the click catched the sound
 $(".amggif").on("click", checkCatchedSound);
 $(".amggif").on("touchstart", checkCatchedSound);
-$(document).on("keypress", checkCatchedSound);
+$(document ).on("keypress", checkCatchedSound);
+//to start the game
+$(".amgstartstop").on("click", startStopGame);
 
 $(".amghelp").on("click", function(){ 
     window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč. Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
