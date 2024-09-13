@@ -12,6 +12,8 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
 
 var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
+var audiosToUnlock = [];
+
 var listening = false;
 var soundCatched = false;
 var gameIsOn = false;
@@ -21,7 +23,12 @@ var gifTimeout = "";
 var listeningTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
-var audio = new  Audio("sounds/" + AudioNames[0]);
+for (let i=0; i<AudioNames.length;i++){
+    var audio = new  Audio("sounds/" + AudioNames[i]);
+    audiosToUnlock.push(audio);
+
+}
+
 
 
 function detectBrowser() {
@@ -60,6 +67,15 @@ function startStopGame(event){
         console.log("elemnet blur");
         event.preventDefault();
         console.log(event);
+
+        if (audiosToUnlock){
+            for (let i=0; i<audiosToUnlock.length; i++){
+                audio[i].play();
+                audio[i].pause();
+                audio[i].currentTime = 0;
+            }
+            audiosToUnlock = null;
+        }
 
         if (speed == 2) {
              howLongToShowGif = 5000;
@@ -132,6 +148,7 @@ function playGame(){
     
     listeningTimeout = setTimeout(function(){
         listening = false;
+        
         $(".amgstartstop").text("Stop");
     }, howLongToListen);
     console.log(listeningTimeout);
