@@ -10,7 +10,7 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
 
-var AudioNames =["200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
+var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
 var listening = false;
 var soundCatched = false;
@@ -127,10 +127,12 @@ function playGame(){
     soundCatched = false;
     playRandomSound();
 
+
     listening = true;
     
     listeningTimeout = setTimeout(function(){
         listening = false;
+        $(".amgstartstop").text("Stop");
     }, howLongToListen);
     console.log(listeningTimeout);
 
@@ -156,22 +158,31 @@ function playRandomSound(){
     audio = new Audio("sounds/" + AudioNames[i]);
     
     audio.play();
+    $(".amgstartstop").text(AudioNames[i]);
     //setTimeout(function(){audio.pause();},2700); //the audio is 3 sec long, can be adjusted, later maybe included in speed options
     
 
 }
 
-detectBrowser();
-//LISTENERS
+
+$(document).ready(function(){
 
 
-//to evaluate if the click catched the sound
-$(".amggif").on("click", checkCatchedSound);
-$(".amggif").on("touchstart", checkCatchedSound);
-$(document ).on("keypress", checkCatchedSound);
-//to start the game
-$(".amgstartstop").on("click", startStopGame);
 
-$(".amghelp").on("click", function(){ 
-    window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji Firefox nebo Chrome) . Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
+    detectBrowser();
+    //LISTENERS
+
+
+    //to evaluate if the click catched the sound
+    $(".amggif").on("click", checkCatchedSound);
+    $(".amggif").on("touchstart", checkCatchedSound);
+    $(document ).on("keypress", checkCatchedSound);
+    //to start the game
+    $(".amgstartstop").on("click", startStopGame);
+
+    $(".amghelp").on("click", function(){ 
+        window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji Firefox nebo Chrome) . Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
+    });
+
+
 });
