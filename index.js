@@ -26,7 +26,7 @@ var playGameTimeout = "";
 var audiosUnlocked = false;
 for (let i=0; i<AudioNames.length;i++){
     var audio = new  Audio("sounds/" + AudioNames[i]);
-    audio.loop=true;
+
     audiosToPlay.push(audio);
     
     console.log(audio.nodeName);
