@@ -54,7 +54,7 @@ function startStopGame(event){
         gameIsOn = true; 
         speed = $(".amgspeed").val();
 
-        $(".amgstartstop").text("Stop");
+        $(".amgstartstop").text("Stop 57");
         $(".amgstartstop").removeClass("btn-primary");
         $(".amgstartstop").addClass("btn-outline-secondary");
         $(".amgwarning").addClass("d-none");
