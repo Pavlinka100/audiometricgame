@@ -10,7 +10,7 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
 
-var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
+var AudioNames =["200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
 var audiosToPlay = [];
 
@@ -26,7 +26,9 @@ var playGameTimeout = "";
 var audiosUnlocked = false;
 for (let i=0; i<AudioNames.length;i++){
     var audio = new  Audio("sounds/" + AudioNames[i]);
+    audio.loop=true;
     audiosToPlay.push(audio);
+    
     console.log(audio.nodeName);
 }
 console.log(audiosToPlay);
