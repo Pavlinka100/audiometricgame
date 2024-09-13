@@ -12,7 +12,7 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
 
 var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
-var audiosToUnlock = [];
+var audiosToPlay = [];
 
 var listening = false;
 var soundCatched = false;
@@ -23,11 +23,13 @@ var gifTimeout = "";
 var listeningTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
+var audiosUnlocked = false;
 for (let i=0; i<AudioNames.length;i++){
     var audio = new  Audio("sounds/" + AudioNames[i]);
-    audiosToUnlock.push(audio);
-
+    audiosToPlay.push(audio);
+    console.log(audio.nodeName);
 }
+console.log(audiosToPlay);
 
 
 
@@ -54,7 +56,7 @@ function startStopGame(event){
         gameIsOn = true; 
         speed = $(".amgspeed").val();
 
-        $(".amgstartstop").text("Stop 57");
+        $(".amgstartstop").text("Stop");
         $(".amgstartstop").removeClass("btn-primary");
         $(".amgstartstop").addClass("btn-outline-secondary");
         $(".amgwarning").addClass("d-none");
@@ -67,14 +69,14 @@ function startStopGame(event){
         console.log("elemnet blur");
         event.preventDefault();
         console.log(event);
-
-        if (audiosToUnlock){
-            for (let i=0; i<audiosToUnlock.length; i++){
-                audio[i].play();
-                audio[i].pause();
-                audio[i].currentTime = 0;
+        console.log("audios to unlock are " +audiosToPlay);
+        if (!audiosUnlocked){
+            for (let i=0; i<audiosToPlay.length; i++){
+                audiosToPlay[i].play();
+                audiosToPlay[i].pause();
+                audiosToPlay[i].currentTime = 0;
             }
-            audiosToUnlock = null;
+            audiosUnlocked = true;
         }
 
         if (speed == 2) {
@@ -111,7 +113,7 @@ function startStopGame(event){
         $(".amghelp").removeClass("d-none");
         $(".amggif").attr("src", "images/button-162066_640.png");
         
-        audio.pause();
+
 
         $(':focus').blur();
 
