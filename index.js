@@ -156,7 +156,7 @@ function playGame(){
 function playRandomSound(){
     let i = Math.floor(Math.random() * AudioNames.length);
     audio = new Audio("sounds/" + AudioNames[i]);
-    
+    audio.currentTime = 0;
     audio.play();
     $(".amgstartstop").text(AudioNames[i]);
     //setTimeout(function(){audio.pause();},2700); //the audio is 3 sec long, can be adjusted, later maybe included in speed options
