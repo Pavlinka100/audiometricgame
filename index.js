@@ -10,25 +10,26 @@ var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
 
-var AudioNames =["200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 
-var audiosToPlay = [];
-
-var listening = false;
-var soundCatched = false;
+var catchingClick = false;
+var soundCought = false;
 var gameIsOn = false;
+
 var counter = 0; //to count rounds to show next gif each round
 var n = Math.floor(Math.random() * gifsNames.length); //to start showing the gifs from different gif every time
+
 var gifTimeout = "";
-var listeningTimeout = "";
+var catchingClickTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
+
+var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
+var audiosToPlay = [];
 var audiosUnlocked = false;
 for (let i=0; i<AudioNames.length;i++){
     var audio = new  Audio("sounds/" + AudioNames[i]);
 
     audiosToPlay.push(audio);
-    
     console.log(audio.nodeName);
 }
 console.log(audiosToPlay);
@@ -43,92 +44,86 @@ function detectBrowser() {
         
     } else {
         $(".amgwarning").removeClass("d-none");
-        $(".amgwarning").text("Otevři mě prosím v Chromu nebo Firefoxu, jinak nemusím správně fungovat. Děkuji!");
+        $(".amgwarning").text("Otevři mě prosím v Chromu nebo Firefoxu. Děkuji!");
     }
     
 }
 
 
 function startStopGame(event){
-    if (event.key){console.log("neco")} else {
-    event.preventDefault();
-    console.log(event.preventDefault());
-    console.log(event);
-    if (!gameIsOn) {
-        gameIsOn = true; 
-        speed = $(".amgspeed").val();
 
-        $(".amgstartstop").text("Stop");
-        $(".amgstartstop").removeClass("btn-primary");
-        $(".amgstartstop").addClass("btn-outline-secondary");
-        $(".amgwarning").addClass("d-none");
-        $(".amgspeedoptions").addClass("d-none");
-        $(".amghelp").addClass("d-none");
-
-        $(':focus').blur();
-        
-
-        console.log("elemnet blur");
+    //once Start button is clicked do this: 
+    if (event.key){console.log(event.key)} else {
         event.preventDefault();
-        console.log(event);
-        console.log("audios to unlock are " +audiosToPlay);
-        if (!audiosUnlocked){
-            for (let i=0; i<audiosToPlay.length; i++){
-                audiosToPlay[i].play();
-                audiosToPlay[i].pause();
-                audiosToPlay[i].currentTime = 0;
+
+        if (!gameIsOn) {
+            gameIsOn = true; 
+            speed = $(".amgspeed").val();
+            $(".amgstartstop").text("Stop");
+            $(".amgstartstop").removeClass("btn-primary");
+            $(".amgstartstop").addClass("btn-outline-secondary");
+            $(".amgwarning").addClass("d-none");
+            $(".amgspeedoptions").addClass("d-none");
+            $(".amghelp").addClass("d-none");
+            $(':focus').blur();
+
+            if (!audiosUnlocked){
+                for (let i=0; i<audiosToPlay.length; i++){
+                    audiosToPlay[i].play();
+                    audiosToPlay[i].pause();
+                    audiosToPlay[i].currentTime = 0;
+                }
+                audiosUnlocked = true;
             }
-            audiosUnlocked = true;
-        }
 
-        if (speed == 2) {
-             howLongToShowGif = 5000;
-             howLongToListen = 3000;
-             howLongTillNextRoundDefault = 5000;
+            if (speed == 2) {
+                howLongToShowGif = 5000;
+                howLongToListen = 3000;
+                howLongTillNextRoundDefault = 5000;
+            } else {
+                howLongToShowGif = 10000;
+                howLongToListen = 6000;
+                howLongTillNextRoundDefault = 10000;
+            }
+            
+            
+            startGameTimeout =  setTimeout(function(){
+                playGame(); 
+            },3000);
+    
+
         } else {
-            howLongToShowGif = 10000;
-            howLongToListen = 6000;
-            howLongTillNextRoundDefault = 10000;
+            //stopping game
+            gameIsOn=false; 
+            catchingClick = false;
+            audio.pause();
+
+            clearTimeout(catchingClickTimeout);
+            clearTimeout(playGameTimeout);
+            clearTimeout(gifTimeout);
+            clearTimeout(startGameTimeout);
+
+            $(".amgstartstop").text("Start");
+            $(".amgstartstop").addClass("btn-primary");
+            $(".amgstartstop").removeClass("btn-outline-secondary");
+            $(".amgspeedoptions").removeClass("d-none");
+            $(".amghelp").removeClass("d-none");
+            $(".amggif").attr("src", "images/button-162066_640.png");
+
+            $(':focus').blur();
+
         }
-        
-        
-        startGameTimeout =  setTimeout(function(){
-            playGame(); 
-        },3000);
- 
-
-    } else {
-        
-        gameIsOn=false; 
-        listening = false;
-        audio.pause();
-
-        clearTimeout(listeningTimeout);
-        clearTimeout(playGameTimeout);
-        clearTimeout(gifTimeout);
-        clearTimeout(startGameTimeout);
-
-        $(".amgstartstop").text("Start");
-        $(".amgstartstop").addClass("btn-primary");
-        $(".amgstartstop").removeClass("btn-outline-secondary");
-        $(".amgspeedoptions").removeClass("d-none");
-        $(".amghelp").removeClass("d-none");
-        $(".amggif").attr("src", "images/button-162066_640.png");
-        
-
-
-        $(':focus').blur();
-
-    }
-} 
+    } 
 }
 
 
-function checkCatchedSound(event){
+function checkCoughtSound(event){
+    //if there is a click or key press, check if it was in catchingClick time window and no previous sound has been caught
+    //if the condition is met show gif
     console.log(event.key);
   
-    if (gameIsOn && listening && (!soundCatched)){ 
-        soundCatched = true;
+    if (gameIsOn && catchingClick && (!soundCought)){ 
+        soundCought = true;
         counter++;
 
         //pick and show next gif
@@ -144,34 +139,28 @@ function checkCatchedSound(event){
 
 function playGame(){
 
-    soundCatched = false;
+    soundCought = false;
     playRandomSound();
-
-
-    listening = true;
-    
-    listeningTimeout = setTimeout(function(){
-        listening = false;
+    catchingClick = true;    
+    catchingClickTimeout = setTimeout(function(){
+        catchingClick = false;
         
         $(".amgstartstop").text("Stop");
     }, howLongToListen);
-    console.log(listeningTimeout);
-
+    
     let randomWaiting = Math.floor(Math.random()*3000);
 
-    if (soundCatched) {
-    howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + howLongToListen+ randomWaiting;
-    }
-    else {
-    howLongTillNextRound = howLongTillNextRoundDefault + howLongToListen + randomWaiting;
+    if (soundCought) {
+        howLongTillNextRound = howLongTillNextRoundDefault + howLongToShowGif + howLongToListen+ randomWaiting;
+    } else {
+        howLongTillNextRound = howLongTillNextRoundDefault + howLongToListen + randomWaiting;
     }
 
     playGameTimeout = setTimeout(function(){
         if (gameIsOn){
-        playGame();
-    };
+            playGame();
+        };
     }, howLongTillNextRound);
-    console.log(playGameTimeout);
 }
 
 function playRandomSound(){
@@ -180,29 +169,24 @@ function playRandomSound(){
 
     audio.play();
     $(".amgstartstop").text(AudioNames[i]);
-    //setTimeout(function(){audio.pause();},2700); //the audio is 3 sec long, can be adjusted, later maybe included in speed options
-    
 
 }
 
 
 $(document).ready(function(){
 
-
-
     detectBrowser();
+
     //LISTENERS
-
-
-    //to evaluate if the click catched the sound
-    $(".amggif").on("click", checkCatchedSound);
-    $(".amggif").on("touchstart", checkCatchedSound);
-    $(document ).on("keypress", checkCatchedSound);
+    //to evaluate if the click cought the sound
+    $(".amggif").on("click", checkCoughtSound);
+    $(".amggif").on("touchstart", checkCoughtSound);
+    $(document ).on("keypress", checkCoughtSound);
     //to start the game
     $(".amgstartstop").on("click", startStopGame);
 
     $(".amghelp").on("click", function(){ 
-        window.alert("Nastav si rychlost a spusť hru. V pomalém módu zazní přibližně 3 zvuky za minutu, v rychlém 6. Jakmile zazní zvuk, klikni na vypínač nebo stiskni jakékoli tlačítko. Když uhodneš zvuk, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji Firefox nebo Chrome) . Pokud neslyšíš zvuk, zkontroluj, zda ostatní programy zvuk vydávají, případně připoj sluchátka.");
+        window.alert("Nastav si rychlost, spusť hru a poslouchej. Jakmile zazní zvuk, stiskni velký černý vypínač (nebo jakékoli tlačítko na klávesnici). Pokud jsi zvuk uholdl/a, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud neslyšíš zvuky, zkontroluj hlasitost, zkus, zda jiná videa v zařízení fungují, případně připoj sluchátka (nebo zkus jiné zařízení). Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji FIREFOX nebo CHROME).");
     });
 
 
