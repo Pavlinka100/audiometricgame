@@ -173,7 +173,7 @@ function playRandomSound(){
     audio = audiosToPlay[i];
 
     audio.play();
-    $(".amgstartstop").text(AudioNames[i]);
+    //$(".amgstartstop").text(AudioNames[i]);
 
 }
 
