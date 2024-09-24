@@ -190,15 +190,7 @@ $(document).ready(function(){
     //to start the game
     $(".amgstartstop").on("click", startStopGame);
 
-    $(".amghelp").on("click", function(){ 
-        $(".amg").location.href = "./rules.html";
-       
-    });
-
-    $(".amghelpback").on("click", function(){ 
-        $(".amg").location.href = "./index.html";
-       
-    });
+    
 
 
 
