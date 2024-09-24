@@ -89,6 +89,11 @@ function startStopGame(event){
             
             startGameTimeout =  setTimeout(function(){
                 playGame(); 
+                $(".amggif").css("background-color", "gray");
+                setTimeout(function(){
+                    $(".amggif").css("background-color", "white");
+                },500)
+                
             },3000);
     
 
@@ -186,8 +191,16 @@ $(document).ready(function(){
     $(".amgstartstop").on("click", startStopGame);
 
     $(".amghelp").on("click", function(){ 
-        window.alert("Nastav si rychlost, spusť hru a poslouchej. Jakmile zazní zvuk, stiskni velký černý vypínač (nebo jakékoli tlačítko na klávesnici). Pokud jsi zvuk uholdl/a, objeví se obrázek. Jestli už nechceš hrát klikni na Stop. Pokud neslyšíš zvuky, zkontroluj hlasitost, zkus, zda jiná videa v zařízení fungují, případně připoj sluchátka (nebo zkus jiné zařízení). Pokud je jiný problém, aktualizuj celou stránku nebo zavři a otevři prohlížeč (doporučuji FIREFOX nebo CHROME).");
+        $(".amg").location.href = "./rules.html";
+       
     });
+
+    $(".amghelpback").on("click", function(){ 
+        $(".amg").location.href = "./index.html";
+       
+    });
+
+
 
 
 });
