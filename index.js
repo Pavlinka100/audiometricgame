@@ -201,7 +201,7 @@ function soundSourceSwitch() {
         $(".amggif").attr("src", "images/button-162066_640.png");
         clearTimeout(externalSoundTimeout);
 
-        $(".amgexternalsound").text("Zapnout externí zvuk");
+        $(".amgexternalsound").text("♫");
         $(".amgstartstop").removeClass("d-none");
         $(".amgwarning").removeClass("d-none");
         $(".amgspeedoptions").removeClass("d-none");
@@ -215,7 +215,7 @@ function soundSourceSwitch() {
     $(".amgwarning").addClass("d-none");
     $(".amgspeedoptions").addClass("d-none");
     $(".amghelp").addClass("d-none");
-    $(".amgexternalsound").text("Vypnout externí zvuk");
+    $(".amgexternalsound").text("Hotovo");
 }
 }
 
