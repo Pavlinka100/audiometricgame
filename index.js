@@ -32,22 +32,18 @@ for (let i=0; i<AudioNames.length;i++){
     audiosToPlay.push(audio);
     console.log(audio.nodeName);
 }
-console.log(audiosToPlay);
 
-
-
-function detectBrowser() {
-    var userAgent = navigator.userAgent;
-   if ( (userAgent.indexOf("Firefox") > -1) || (userAgent.indexOf("Chrome") > -1 )) {
-    console.log("browser ok" + userAgent.indexOf("Firefox") + " in FF and in Chrome" + userAgent.indexOf("Chrome"));
-
-        
-    } else {
-        $(".amgwarning").removeClass("d-none");
-        $(".amgwarning").text("Otevři mě prosím v Chromu nebo Firefoxu. Děkuji!");
+let gifs = [];
+function preload_image(gifsNames) {
+    
+    for (let i=0; i<gifsNames.length; i++){
+        let img = new Image();
+        img.src = "gifs/" + gifsNames[i];
+        gifs.push(img);
     }
     
-}
+  }
+  
 
 
 function startStopGame(event){
@@ -132,8 +128,8 @@ function checkCoughtSound(event){
         counter++;
 
         //pick and show next gif
-        gif = "gifs/" + gifsNames[(n+counter) % gifsNames.length];
-        $(".amggif").attr("src", gif);
+        gif = gifs[(n+counter) % gifsNames.length];
+        $(".amggif").attr("src", gif.src);
 
         //switch to the button image after some time
         gifTimeout = setTimeout(function(){
@@ -180,7 +176,7 @@ function playRandomSound(){
 
 $(document).ready(function(){
 
-    detectBrowser();
+    preload_image(gifsNames);
 
     //LISTENERS
     //to evaluate if the click cought the sound
@@ -189,10 +185,4 @@ $(document).ready(function(){
     $(document ).on("keypress", checkCoughtSound);
     //to start the game
     $(".amgstartstop").on("click", startStopGame);
-
-    
-
-
-
-
 });
