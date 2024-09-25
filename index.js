@@ -22,6 +22,9 @@ var gifTimeout = "";
 var catchingClickTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
+var externalSound = false;
+var externalSoundTimeout = "";
+
 
 var AudioNames =[ "1500.mp3", "200.mp3","300.mp3", "500.mp3","800.mp3","1000.mp3"]; 
 var audiosToPlay = [];
@@ -61,6 +64,7 @@ function startStopGame(event){
             $(".amgwarning").addClass("d-none");
             $(".amgspeedoptions").addClass("d-none");
             $(".amghelp").addClass("d-none");
+            $(".amgexternalsound").addClass("d-none");
             $(':focus').blur();
 
             if (!audiosUnlocked){
@@ -82,15 +86,16 @@ function startStopGame(event){
                 howLongTillNextRoundDefault = 10000;
             }
             
-            
-            startGameTimeout =  setTimeout(function(){
-                playGame(); 
-                $(".amggif").css("background-color", "gray");
-                setTimeout(function(){
-                    $(".amggif").css("background-color", "white");
-                },500)
-                
-            },3000);
+            if (!externalSound) {
+                startGameTimeout =  setTimeout(function(){
+                    playGame(); 
+                    $(".amggif").css("background-color", "gray");
+                    setTimeout(function(){
+                        $(".amggif").css("background-color", "white");
+                    },500)
+                    
+                },3000);
+            }
     
 
         } else {
@@ -109,6 +114,7 @@ function startStopGame(event){
             $(".amgstartstop").removeClass("btn-outline-secondary");
             $(".amgspeedoptions").removeClass("d-none");
             $(".amghelp").removeClass("d-none");
+            $(".amgexternalsound").removeClass("d-none");
             $(".amggif").attr("src", "images/button-162066_640.png");
 
             $(':focus').blur();
@@ -121,20 +127,35 @@ function startStopGame(event){
 function checkCoughtSound(event){
     //if there is a click or key press, check if it was in catchingClick time window and no previous sound has been caught
     //if the condition is met show gif
-    console.log(event.key);
-  
-    if (gameIsOn && catchingClick && (!soundCought)){ 
-        soundCought = true;
-        counter++;
 
-        //pick and show next gif
-        gif = gifs[(n+counter) % gifsNames.length];
-        $(".amggif").attr("src", gif.src);
+    if (!externalSound) {
+        if (gameIsOn && catchingClick && (!soundCought)){ 
+            soundCought = true;
+            counter++;
 
-        //switch to the button image after some time
-        gifTimeout = setTimeout(function(){
-            $(".amggif").attr("src", "images/button-162066_640.png");
-        },howLongToShowGif);
+            //pick and show next gif
+            gif = gifs[(n+counter) % gifsNames.length];
+            $(".amggif").attr("src", gif.src);
+
+            //switch to the button image after some time
+            gifTimeout = setTimeout(function(){
+                $(".amggif").attr("src", "images/button-162066_640.png");
+            },howLongToShowGif);
+        }
+    } else { 
+        if (catchingClick) {
+            counter++;
+            catchingClick = false;
+            //pick and show next gif
+            gif = gifs[(n+counter) % gifsNames.length];
+            $(".amggif").attr("src", gif.src);
+
+            //switch to the button image after some time
+            externalSoundTimeout = setTimeout(function(){
+                $(".amggif").attr("src", "images/button-162066_640.png");
+                catchingClick = true;
+            },4000);
+        }
     }
 }
 
@@ -173,6 +194,31 @@ function playRandomSound(){
 
 }
 
+function soundSourceSwitch() {
+    if (externalSound) {
+        externalSound = false; 
+        catchingClick = false;
+        $(".amggif").attr("src", "images/button-162066_640.png");
+        clearTimeout(externalSoundTimeout);
+
+        $(".amgexternalsound").text("Zapnout externí zvuk");
+        $(".amgstartstop").removeClass("d-none");
+        $(".amgwarning").removeClass("d-none");
+        $(".amgspeedoptions").removeClass("d-none");
+        $(".amghelp").removeClass("d-none");
+
+    } else {
+    externalSound = true; 
+    catchingClick = true;
+    speed = 2;
+    $(".amgstartstop").addClass("d-none");
+    $(".amgwarning").addClass("d-none");
+    $(".amgspeedoptions").addClass("d-none");
+    $(".amghelp").addClass("d-none");
+    $(".amgexternalsound").text("Vypnout externí zvuk");
+}
+}
+
 
 $(document).ready(function(){
 
@@ -185,4 +231,5 @@ $(document).ready(function(){
     $(document ).on("keypress", checkCoughtSound);
     //to start the game
     $(".amgstartstop").on("click", startStopGame);
+    $(".amgexternalsound").on("click", soundSourceSwitch);
 });

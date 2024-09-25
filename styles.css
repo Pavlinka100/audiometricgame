@@ -53,9 +53,7 @@ img {
 }
 
 @media  screen and (max-width: 767px) {
-  footer{
-    position: relative;
-  }
+
   .amggif {
 
     min-width: 200px;
@@ -69,9 +67,7 @@ img {
 
 
 @media  screen and (max-height: 700px) {
-  footer{
-    display:none;
-  }
+
  
   .amggif {
     height: 90vh;
