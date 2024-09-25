@@ -3,9 +3,10 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 98vh;
-  width: 98vw;
+  height: 96vh;
+  width: 96vw;
   margin: 0;
+  
   
 
   
@@ -78,6 +79,11 @@ img {
 
   min-height: 200px;
 
+  }
+
+  .amgexternalsound {
+    top: 0;
+    right: 0;
   }
 
   .amgheading{
