@@ -6,10 +6,7 @@ body {
   height: 96vh;
   width: 98vw;
   margin: 0;
-  
-  
-
-  
+   
  }
 
 .amgspeedoptions{
@@ -54,30 +51,23 @@ img {
 }
 
 @media  screen and (max-width: 767px) {
-
   .amggif {
 
     min-width: 200px;
-
-  min-height: 200px;
+    min-height: 200px;
 
   }
-
-  
 }
 
 
 @media  screen and (max-height: 700px) {
-
- 
   .amggif {
     height: 90vh;
     width: 90vh;
     max-width: 75vw;
     max-height: 75vw;
     min-width: 200x;
-
-  min-height: 200px;
+    min-height: 200px;
 
   }
 

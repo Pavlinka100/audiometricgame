@@ -1,4 +1,4 @@
-//as there is no backend, leaving as the name arrays here to be able to host it on github without backend required
+//as there is no backend, leaving as the name arrays here to be able to host it on github without backend 
 var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-13309_512.gif","cartoon-11499_512.gif", "cartoon-562_256.gif",
     "cartoon-564_256.gif", "cartoon-571_256.gif","cartoon-574_256.gif", "cartoon-762_256.gif",
     "cat-13169_512.gif", "cat-133_512.gif","cat-13754_512.gif", "cat-14030_512.gif",
@@ -18,10 +18,13 @@ var gameIsOn = false;
 var counter = 0; //to count rounds to show next gif each round
 var n = Math.floor(Math.random() * gifsNames.length); //to start showing the gifs from different gif every time
 
+//preparing timeouts to be able to clear them
 var gifTimeout = "";
 var catchingClickTimeout = "";
 var startGameTimeout = "";
 var playGameTimeout = "";
+
+//controling sound mode -- if external sound is playing, game is only checking clicks without audio 
 var externalSound = false;
 var externalSoundTimeout = "";
 
@@ -36,6 +39,8 @@ for (let i=0; i<AudioNames.length;i++){
     console.log(audio.nodeName);
 }
 
+
+//preloading gifs to make the game run smoothly
 let gifs = [];
 function preload_image(gifsNames) {
     
@@ -61,12 +66,14 @@ function startStopGame(event){
             $(".amgstartstop").text("Stop");
             $(".amgstartstop").removeClass("btn-primary");
             $(".amgstartstop").addClass("btn-outline-secondary");
-            $(".amgwarning").addClass("d-none");
+           
             $(".amgspeedoptions").addClass("d-none");
             $(".amghelp").addClass("d-none");
             $(".amgexternalsound").addClass("d-none");
             $(':focus').blur();
 
+            
+            //unlocking audios due to Safari strict policy about not playing audios without user interaction
             if (!audiosUnlocked){
                 for (let i=0; i<audiosToPlay.length; i++){
                     audiosToPlay[i].play();
@@ -76,17 +83,18 @@ function startStopGame(event){
                 audiosUnlocked = true;
             }
 
-            if (speed == 2) {
-                howLongToShowGif = 5000;
-                howLongToListen = 3000;
-                howLongTillNextRoundDefault = 5000;
-            } else {
-                howLongToShowGif = 10000;
-                howLongToListen = 6000;
-                howLongTillNextRoundDefault = 10000;
-            }
             
-            if (!externalSound) {
+                if (speed == 2) {
+                    howLongToShowGif = 5000;
+                    howLongToListen = 3000;
+                    howLongTillNextRoundDefault = 5000;
+                } else {
+                    howLongToShowGif = 10000;
+                    howLongToListen = 6000;
+                    howLongTillNextRoundDefault = 10000;
+                }
+            
+            
                 startGameTimeout =  setTimeout(function(){
                     playGame(); 
                     $(".amggif").css("background-color", "gray");
@@ -95,11 +103,11 @@ function startStopGame(event){
                     },500)
                     
                 },3000);
-            }
+            
     
 
         } else {
-            //stopping game
+            //stop game
             gameIsOn=false; 
             catchingClick = false;
             audio.pause();
@@ -108,7 +116,8 @@ function startStopGame(event){
             clearTimeout(playGameTimeout);
             clearTimeout(gifTimeout);
             clearTimeout(startGameTimeout);
-
+            
+            //restore buttons
             $(".amgstartstop").text("Start");
             $(".amgstartstop").addClass("btn-primary");
             $(".amgstartstop").removeClass("btn-outline-secondary");
@@ -164,11 +173,11 @@ function playGame(){
     soundCought = false;
     playRandomSound();
     catchingClick = true;    
+
     catchingClickTimeout = setTimeout(function(){
-        catchingClick = false;
-        
-        $(".amgstartstop").text("Stop");
-    }, howLongToListen);
+            catchingClick = false;
+            $(".amgstartstop").text("Stop");
+        }, howLongToListen);
     
     let randomWaiting = Math.floor(Math.random()*3000);
 
@@ -179,44 +188,42 @@ function playGame(){
     }
 
     playGameTimeout = setTimeout(function(){
-        if (gameIsOn){
-            playGame();
-        };
-    }, howLongTillNextRound);
+            if (gameIsOn){
+                playGame();
+            };
+        }, howLongTillNextRound);
 }
 
 function playRandomSound(){
     let i = Math.floor(Math.random() * AudioNames.length);
     audio = audiosToPlay[i];
-
     audio.play();
-    //$(".amgstartstop").text(AudioNames[i]);
-
 }
 
 function soundSourceSwitch() {
+    //stop external sound mode
     if (externalSound) {
         externalSound = false; 
         catchingClick = false;
+
         $(".amggif").attr("src", "images/button-162066_640.png");
         clearTimeout(externalSoundTimeout);
 
         $(".amgexternalsound").text("♫");
-        $(".amgstartstop").removeClass("d-none");
-        $(".amgwarning").removeClass("d-none");
+        $(".amgstartstop").removeClass("d-none");        
         $(".amgspeedoptions").removeClass("d-none");
         $(".amghelp").removeClass("d-none");
 
     } else {
-    externalSound = true; 
-    catchingClick = true;
-    speed = 2;
-    $(".amgstartstop").addClass("d-none");
-    $(".amgwarning").addClass("d-none");
-    $(".amgspeedoptions").addClass("d-none");
-    $(".amghelp").addClass("d-none");
-    $(".amgexternalsound").text("Hotovo");
-}
+        //start external sound mode which allows different behaviour in checkCoughtSound
+        externalSound = true; 
+        catchingClick = true;
+        
+        $(".amgstartstop").addClass("d-none");    
+        $(".amgspeedoptions").addClass("d-none");
+        $(".amghelp").addClass("d-none");
+        $(".amgexternalsound").text("Hotovo");
+    }
 }
 
 
