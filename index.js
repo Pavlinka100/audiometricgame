@@ -134,7 +134,7 @@ function startStopGame(event){
 
 
 function checkCoughtSound(event){
-    //if there is a click or key press, check if it was in catchingClick time window and no previous sound has been caught
+    //if there is a click or key press, check if it was in catchingClick time window and if no previous sound has been caught
     //if the condition is met show gif
 
     if (!externalSound) {
@@ -146,7 +146,13 @@ function checkCoughtSound(event){
             gif = gifs[(n+counter) % gifsNames.length];
             $(".amggif").attr("src", gif.src);
 
-            //switch to the button image after some time
+            //stop playing audio, setting this in timeout to prevent situation, that sound is catched despite the fact it was not audible
+            setTimeout(function(){
+                audio.pause();
+                audio.currentTime = 0;
+            },50);
+
+            //switch gif to the button image after defined time
             gifTimeout = setTimeout(function(){
                 $(".amggif").attr("src", "images/button-162066_640.png");
             },howLongToShowGif);
