@@ -1,3 +1,27 @@
+<?php
+// Define the directory to scan
+$directory = "./gifs"; 
+
+// Array to store gif file names
+$gifFiles = [];
+
+// Scan the directory for files
+$files = scandir($directory);
+
+// Loop through the files and select only .gif files
+foreach ($files as $file) {
+  // Check if the file has a .gif extension
+  if (pathinfo($file, PATHINFO_EXTENSION) === 'gif') {
+      $gifFiles[] = $file; // Add the .gif file to the array
+     
+  }
+}
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -11,9 +35,12 @@
 </head>
 
 <body>
+
+
   <button class=" btn btn-outline-secondary border-0 amgexternalsound float-right  position-absolute top-0 end-0 mx-5 fw-bold" >♫</button>
   <div class="container ">
-    
+  
+  
     <div class="row d-flex justify-content-center" >
       
       <div class="d-flex justify-content-center"><h1 class="mb-3 mt-3 amgheading fw-bold text-primary">Uhodni zvuk!</h1>
@@ -42,7 +69,7 @@
         </div>
       </div>
 
-    
+      <div class="amggifnames d-none"><?php echo implode(', ', $gifFiles);; ?></div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
