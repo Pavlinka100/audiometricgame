@@ -1,5 +1,5 @@
 //as there is no backend, leaving as the name arrays here to be able to host it on github without backend 
- /* var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-13309_512.gif","cartoon-11499_512.gif", "cartoon-562_256.gif",
+var gifsNames = ["avocado-1113_512.gif", "bell-pepper-8079_256.gif", "butterfly-13309_512.gif","cartoon-11499_512.gif", "cartoon-562_256.gif",
     "cartoon-564_256.gif", "cartoon-571_256.gif","cartoon-574_256.gif", "cartoon-762_256.gif",
     "cat-13169_512.gif", "cat-133_512.gif","cat-13754_512.gif", "cat-14030_512.gif",
     "cat-6295_512.gif", "character-13952_256.gif","cow-59_256.gif", "dog-12565_512.gif",
@@ -9,20 +9,6 @@
     "penguin-10607_256.gif", "pinwheel-8829_256.gif","rabbit-14586_512.gif", "rabbit-6933.gif",
     "sheep-6470_256.gif", "star-19_256.gif","valentine-3652_256.gif", "wall-8423_256.gif",
     "whale-155_512.gif"];
-    */
-
-    
-    // Get the text content of amggifnames class which contains all the gif names in the folder ./gifs
-    var gifText = $(".amggifnames").text();
-    console.log(gifText)
-
-    // Convert the text to an array
-    var gifsNames = gifText.split(',').map(function (gif) {
-        return gif.trim(); 
-    });
-
-
-
 
 
 var catchingClick = false;
